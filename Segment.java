@@ -15,6 +15,7 @@ public class Segment
     private Color color;
     public static int LONGITUD_SEGMENTO = 4;
     private static final int DIFERENCIA_DE_GRADOS_ENTRE_DIRECCIONES = 90;
+    // Diereccion en la que se dibuja el Segmento
     public final static int DERECHA = 0;
     public final static int ABAJO = 1;
     public final static int IZQUIERDA = 2;
@@ -30,7 +31,7 @@ public class Segment
         this.movimiento = movimiento;        
         color = Color.BLACK;
     }
-        
+
     /**
      * Metodo que devuelve la posicion del eje x del segmento
      */
@@ -47,4 +48,43 @@ public class Segment
         return yPosicion;
     }
 
+    public void erase(Canvas canvas) 
+    {
+        canvas.erase();
+    }
+    
+    /**
+     * Metodo que devuelve la posicion final en y del segmento   
+     */
+    public int getXPositionFinal()
+    {
+        int xFinal = xPosicion;
+        if(movimiento == IZQUIERDA)
+        {
+            xFinal -= LONGITUD_SEGMENTO;
+        }
+        else if(movimiento == DERECHA)
+        {
+            xFinal += LONGITUD_SEGMENTO;
+        }
+        return xFinal;
+    }
+
+    /**
+     * Metodo que devuelve la posicion final en y del segmento     
+     */
+    public int getYPositionFinal()
+    {
+        int yFinal = yPosicion;
+        if(movimiento == ARRIBA)
+        {
+            yFinal -= LONGITUD_SEGMENTO;
+        }
+        else if(movimiento == ABAJO)
+        {
+            yFinal += LONGITUD_SEGMENTO;
+        }
+        return yFinal;
+    }
 }
+
