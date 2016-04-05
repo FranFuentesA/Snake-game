@@ -86,5 +86,14 @@ public class Segment
         }
         return yFinal;
     }
+    
+    /**
+     * Metodo que devuelve hacia que lado se mueve el segmento    
+     */
+    public int getMovimiento()
+    {
+        return movimiento;
+    }
+
 }
 
