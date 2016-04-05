@@ -31,7 +31,43 @@ public class Segment
         this.movimiento = movimiento;        
         color = Color.BLACK;         
     }
-
+    
+       /**
+     * Metodo que dibuja un segmento   
+     */
+    public void draw(Canvas canvas) 
+    {
+         canvas.setForegroundColor(color);
+         // Dibuja el segmento hacia la derecha
+         if (movimiento == DERECHA) 
+         {
+               canvas.drawLine(xPosicion, yPosicion, xPosicion + LONGITUD_SEGMENTO, yPosicion);
+         }
+         // Dibuja el segmento hacia la izquierda
+         if (movimiento == IZQUIERDA) 
+         {
+               canvas.drawLine(xPosicion, yPosicion, xPosicion - LONGITUD_SEGMENTO, yPosicion);
+         }
+          // Dibuja el segmento hacia la arriba
+         if (movimiento == ARRIBA) 
+         {
+               canvas.drawLine(xPosicion, yPosicion, xPosicion + LONGITUD_SEGMENTO, yPosicion);
+         }
+          // Dibuja el segmento hacia la abajo
+         if (movimiento == ABAJO) 
+         {
+               canvas.drawLine(xPosicion, yPosicion, xPosicion, LONGITUD_SEGMENTO + yPosicion);
+         }
+    }
+    
+    /**
+     * Metodo que borra el segmento
+     */
+    public void erase(Canvas canvas) 
+    {
+        canvas.erase();
+    }       
+    
     /**
      * Metodo que devuelve la posicion del eje x del segmento
      */
@@ -48,14 +84,7 @@ public class Segment
         return yPosicion;
     }
     
-    /**
-     * Metodo que borra el segmento
-     */
-    public void erase(Canvas canvas) 
-    {
-        canvas.erase();
-    }
-    
+        
     /**
      * Metodo que devuelve la posicion final en el eje X del segmento   
      */
@@ -91,6 +120,23 @@ public class Segment
     }
     
     /**
+     * Metodo que permite saber si el segmento colisiona
+     */
+    public boolean colisionanCon(Segment segment)
+    {
+        boolean colision = false;
+        if (getYPosicion() == getYPositionFinal()) 
+        {
+            colision = true;
+        } else if (getXPosicion() == getXPositionFinal()) 
+        {
+            colision = true;
+        }
+        return colision ;
+    }
+
+    
+    /**
      * Metodo que devuelve hacia que lado se mueve el segmento    
      */
     public int getMovimiento()
@@ -98,32 +144,6 @@ public class Segment
         return movimiento;
     }
     
-    /**
-     * Metodo que dibuja un segmento   
-     */
-    public void draw(Canvas canvas) 
-    {
-         canvas.setForegroundColor(color);
-         // Dibuja el segmento hacia la derecha
-         if (movimiento == DERECHA) 
-         {
-               canvas.drawLine(xPosicion, yPosicion, xPosicion + LONGITUD_SEGMENTO, yPosicion);
-         }
-         // Dibuja el segmento hacia la izquierda
-         if (movimiento == IZQUIERDA) 
-         {
-               canvas.drawLine(xPosicion, yPosicion, xPosicion - LONGITUD_SEGMENTO, yPosicion);
-         }
-          // Dibuja el segmento hacia la arriba
-         if (movimiento == ARRIBA) 
-         {
-               canvas.drawLine(xPosicion, yPosicion, xPosicion + LONGITUD_SEGMENTO, yPosicion);
-         }
-          // Dibuja el segmento hacia la abajo
-         if (movimiento == ABAJO) 
-         {
-               canvas.drawLine(xPosicion, yPosicion, xPosicion, LONGITUD_SEGMENTO + yPosicion);
-         }
-    }
+   
 }
 
