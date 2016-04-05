@@ -68,14 +68,7 @@ public class Segment
         canvas.erase();
     }       
     
-    /**
-     * Metodo que devuelve la posicion del eje x del segmento
-     */
-    public int getXPosicionInicial()
-    {
-        return xPosicion;
-    }
-
+  
     /**
      * Metodo que devuelve la posicion del eje y del segmento
      */
@@ -83,7 +76,32 @@ public class Segment
     {
         return yPosicion;
     }
-            
+    
+       /**
+     * Metodo que devuelve la posicion final en el eje Y del segmento     
+     */
+    public int getYPositionFinal()
+    {
+        int yFinal = yPosicion;
+        if(movimiento == ARRIBA)
+        {
+            yFinal -= LONGITUD_SEGMENTO;
+        }
+        else if(movimiento == ABAJO)
+        {
+            yFinal += LONGITUD_SEGMENTO;
+        }
+        return yFinal;
+    }
+    
+      /**
+     * Metodo que devuelve la posicion del eje x del segmento
+     */
+    public int getXPosicionInicial()
+    {
+        return xPosicion;
+    }
+
     /**
      * Metodo que devuelve la posicion final en el eje X del segmento   
      */
@@ -101,21 +119,12 @@ public class Segment
         return xFinal;
     }
 
-    /**
-     * Metodo que devuelve la posicion final en el eje Y del segmento     
+       /**
+     * Metodo que devuelve hacia que lado se mueve el segmento    
      */
-    public int getYPositionFinal()
+    public int getMovimiento()
     {
-        int yFinal = yPosicion;
-        if(movimiento == ARRIBA)
-        {
-            yFinal -= LONGITUD_SEGMENTO;
-        }
-        else if(movimiento == ABAJO)
-        {
-            yFinal += LONGITUD_SEGMENTO;
-        }
-        return yFinal;
+        return movimiento;
     }
     
     /**
@@ -132,16 +141,7 @@ public class Segment
             colision = true;
         }
         return colision ;
-    }
-
-    
-    /**
-     * Metodo que devuelve hacia que lado se mueve el segmento    
-     */
-    public int getMovimiento()
-    {
-        return movimiento;
-    }
+    } 
     
    
 }
