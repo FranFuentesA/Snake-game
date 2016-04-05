@@ -13,7 +13,7 @@ public class Segment
     private Canvas canvas;
     private int movimiento;
     private Color color;
-    public static int LONGITUD_SEGMENTO = 4;
+    public static int LONGITUD_SEGMENTO = 30;
     private static final int DIFERENCIA_DE_GRADOS_ENTRE_DIRECCIONES = 90;
     // Diereccion en la que se dibuja el Segmento
     public final static int DERECHA = 0;
@@ -24,12 +24,12 @@ public class Segment
     /**
      * Constructor for objects of class Segment
      */
-    public Segment(int xPosicion, int yPosicion, int movimiento, Color color)
+    public Segment(int xPosicion, int yPosicion, int movimiento)
     {
         this.xPosicion = xPosicion;
         this.yPosicion = yPosicion;
         this.movimiento = movimiento;        
-        color = Color.BLACK;
+        color = Color.BLACK;         
     }
 
     /**
@@ -47,14 +47,17 @@ public class Segment
     {
         return yPosicion;
     }
-
+    
+    /**
+     * Metodo que borra el segmento
+     */
     public void erase(Canvas canvas) 
     {
         canvas.erase();
     }
     
     /**
-     * Metodo que devuelve la posicion final en y del segmento   
+     * Metodo que devuelve la posicion final en el eje X del segmento   
      */
     public int getXPositionFinal()
     {
@@ -71,7 +74,7 @@ public class Segment
     }
 
     /**
-     * Metodo que devuelve la posicion final en y del segmento     
+     * Metodo que devuelve la posicion final en el eje Y del segmento     
      */
     public int getYPositionFinal()
     {
@@ -94,6 +97,33 @@ public class Segment
     {
         return movimiento;
     }
-
+    
+    /**
+     * Metodo que dibuja un segmento   
+     */
+    public void draw(Canvas canvas) 
+    {
+         canvas.setForegroundColor(color);
+         // Dibuja el segmento hacia la derecha
+         if (movimiento == DERECHA) 
+         {
+               canvas.drawLine(xPosicion, yPosicion, xPosicion + LONGITUD_SEGMENTO, yPosicion);
+         }
+         // Dibuja el segmento hacia la izquierda
+         if (movimiento == IZQUIERDA) 
+         {
+               canvas.drawLine(xPosicion, yPosicion, xPosicion - LONGITUD_SEGMENTO, yPosicion);
+         }
+          // Dibuja el segmento hacia la arriba
+         if (movimiento == ARRIBA) 
+         {
+               canvas.drawLine(xPosicion, yPosicion, xPosicion + LONGITUD_SEGMENTO, yPosicion);
+         }
+          // Dibuja el segmento hacia la abajo
+         if (movimiento == ABAJO) 
+         {
+               canvas.drawLine(xPosicion, yPosicion, xPosicion, LONGITUD_SEGMENTO + yPosicion);
+         }
+    }
 }
 
