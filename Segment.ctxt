@@ -1,0 +1,11 @@
+#BlueJ class context
+comment0.params=xPosicion\ yPosicion\ movimiento\ color
+comment0.target=Segment(int,\ int,\ int,\ java.awt.Color)
+comment0.text=\r\n\ Constructor\ for\ objects\ of\ class\ Segment\r\n
+comment1.params=
+comment1.target=int\ getXPosicion()
+comment1.text=\r\n\ Metodo\ que\ devuelve\ la\ posicion\ del\ eje\ x\ del\ segmento\r\n
+comment2.params=
+comment2.target=int\ getYPosicion()
+comment2.text=\r\n\ Metodo\ que\ devuelve\ la\ posicion\ del\ eje\ y\ del\ segmento\r\n
+numComments=3
