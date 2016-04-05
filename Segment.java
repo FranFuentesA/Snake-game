@@ -71,7 +71,7 @@ public class Segment
     /**
      * Metodo que devuelve la posicion del eje x del segmento
      */
-    public int getXPosicion()
+    public int getXPosicionInicial()
     {
         return xPosicion;
     }
@@ -79,12 +79,11 @@ public class Segment
     /**
      * Metodo que devuelve la posicion del eje y del segmento
      */
-    public int getYPosicion()
+    public int getYPosicionInicial()
     {
         return yPosicion;
     }
-    
-        
+            
     /**
      * Metodo que devuelve la posicion final en el eje X del segmento   
      */
@@ -125,10 +124,10 @@ public class Segment
     public boolean colisionanCon(Segment segment)
     {
         boolean colision = false;
-        if (getYPosicion() == getYPositionFinal()) 
+        if (getYPosicionInicial() == getYPositionFinal()) 
         {
             colision = true;
-        } else if (getXPosicion() == getXPositionFinal()) 
+        } else if (getXPosicionInicial() == getXPositionFinal()) 
         {
             colision = true;
         }
