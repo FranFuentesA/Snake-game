@@ -18,6 +18,7 @@ public class Snake
     private static final int DIFERENCIA_DE_GRADOS_ENTRE_DIRECCIONES = 90;
     private static final int MARGEN_LIENZO = 10;
     private static final int TAMANO_CABEZA = 8;
+
     
     /*
      * Constructor de la clase Snake
@@ -38,23 +39,32 @@ public class Snake
     public void dibujar(Canvas lienzo)
     {
         for (Segment segmento : segmentos) {
-            segmento.draw(lienzo);
+            segmento.dibujar(lienzo);
         }
+        Segment cabeza = segmentos.get(segmentos.size() - 1);
+        lienzo.setForegroundColor(color);
+        lienzo.fillCircle(cabeza.getPosicionFinalX() - (TAMANO_CABEZA / 2),
+                          cabeza.getPosicionFinalY() - (TAMANO_CABEZA / 2),
+                          TAMANO_CABEZA);
+       
     }
     
-    /*
+    /**
      * Borra la serpiente del lienzo dado
      */
     public void borrar(Canvas lienzo)
     {
         for (Segment segmento : segmentos) {
-            segmento.erase(lienzo);
-        }             
+            segmento.borrar(lienzo);
+        }        
+        Segment cabeza = segmentos.get(segmentos.size() - 1);
+        lienzo.eraseCircle(cabeza.getPosicionFinalX() - (TAMANO_CABEZA / 2),
+                          cabeza.getPosicionFinalY() - (TAMANO_CABEZA / 2),
+                          TAMANO_CABEZA);      
     }
     
     /*
-     * Adiciona un segmento aleatorio a la serpiente. Devuelve true en caso de que
-     * haya sido capaz de añadir un nuevo segmento y false en otro caso.
+     * Adiciona un segmento aleatorio a la serpiente
      */
     public boolean addSegment() 
     {
@@ -74,8 +84,8 @@ public class Snake
         int posicionOrigenY = aleatorio.nextInt(altoLienzo - (2 * MARGEN_LIENZO)) 
                               + MARGEN_LIENZO + Segment.LONGITUD_SEGMENTO; 
         if (segmentos.size() != 0) {
-            posicionOrigenX = segmentos.get(segmentos.size() - 1).getXPositionFinal();
-            posicionOrigenY = segmentos.get(segmentos.size() - 1).getYPositionFinal();
+            posicionOrigenX = segmentos.get(segmentos.size() - 1).getPosicionFinalX();
+            posicionOrigenY = segmentos.get(segmentos.size() - 1).getPosicionFinalY();
         }
         
         //Probamos todos los segmentos posibles hasta que demos con uno valido
@@ -84,7 +94,7 @@ public class Snake
         boolean encontradoNuevoSegmentoValido = false;
         while (!direcciones.isEmpty() && !encontradoNuevoSegmentoValido) {
             int direccion = direcciones.remove(aleatorio.nextInt(direcciones.size()));
-            posibleNuevoSegmento = new Segment(posicionOrigenX, posicionOrigenY, direccion);
+            posibleNuevoSegmento = new Segment(posicionOrigenX, posicionOrigenY, direccion, color);
             encontradoNuevoSegmentoValido = esSegmentoValido(posibleNuevoSegmento);                             
         }
         
@@ -100,7 +110,7 @@ public class Snake
     
     /*
      * Indica si un segmento es valido, es decir, si se puede adicionar
-     * a la serpiente sin que colisione con otros segmentos existentes de la serpiente
+     * a la serpiente sin que colisione con otros segmentos de la serpiente
      * o con los bordes del lienzo
      */
     private boolean esSegmentoValido(Segment segmento)
@@ -114,10 +124,10 @@ public class Snake
     public boolean colisionaConBordes(Segment segmento)
     {
         boolean colisiona = false;
-        if ((segmento.getXPositionFinal() >= anchoLienzo - MARGEN_LIENZO) ||
-            (segmento.getYPositionFinal() >= altoLienzo - MARGEN_LIENZO) ||
-            (segmento.getXPositionFinal() <= MARGEN_LIENZO) ||
-            (segmento.getYPositionFinal() <= MARGEN_LIENZO)) {
+        if ((segmento.getPosicionFinalX() >= anchoLienzo - MARGEN_LIENZO) ||
+            (segmento.getPosicionFinalY() >= altoLienzo - MARGEN_LIENZO) ||
+            (segmento.getPosicionFinalX() <= MARGEN_LIENZO) ||
+            (segmento.getPosicionFinalY() <= MARGEN_LIENZO)) {
                 colisiona = true;
         }
         
@@ -131,12 +141,43 @@ public class Snake
     {
         boolean colisiona = false;
         for (Segment segmentoSerpiente : segmentos) {
-            if (segmentoSerpiente.colisionanCon(segmento)) {
+            if (segmentoSerpiente.colisiona(segmento)) {
                 colisiona = true;
             }
         }
         return colisiona;
     }
     
-
+    /*
+     * Adiciona un segmento a la serpiente si es posible; en caso contrario 
+     * devuelve false
+     */
+    public boolean mover() 
+    {
+        boolean serpienteMovida = false;
+        segmentos.remove(0);
+        if (addSegment()) {
+            serpienteMovida = true;
+        }
+        return serpienteMovida;
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

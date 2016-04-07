@@ -1,148 +1,131 @@
-import java.awt.*;
+import java.awt.Color;
+
 /**
  * Write a description of class Segment here.
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author Miguel Bayon
+ * @version 1.0
  */
 public class Segment
 {
-    // instance variables - replace the example below with your own
-    private int xPosicion;    
-    private int yPosicion;
-    private Canvas canvas;
-    private int movimiento;
+    private int posicionX;
+    private int posicionY;
+    private int direccion;
     private Color color;
-    public static int LONGITUD_SEGMENTO = 30;
-    private static final int DIFERENCIA_DE_GRADOS_ENTRE_DIRECCIONES = 90;
-    // Diereccion en la que se dibuja el Segmento
-    public final static int DERECHA = 0;
-    public final static int ABAJO = 1;
-    public final static int IZQUIERDA = 2;
-    public final static int ARRIBA = 3;
-
-    /**
-     * Constructor for objects of class Segment
+    public static final int LONGITUD_SEGMENTO = 10;
+    
+    /*
+     * Constructor de la clase Segment
      */
-    public Segment(int xPosicion, int yPosicion, int movimiento)
+    public Segment(int posX, int posY, int direccion, Color color)
     {
-        this.xPosicion = xPosicion;
-        this.yPosicion = yPosicion;
-        this.movimiento = movimiento;        
-        color = Color.BLACK;         
+        posicionX = posX;
+        posicionY = posY;
+        this.direccion = direccion;
+        this.color = color;
     }
     
-       /**
-     * Metodo que dibuja un segmento   
+    /*
+     * Devuelve la coordenada del eje X donde acaba el segmento
      */
-    public void draw(Canvas canvas) 
+    public int getPosicionFinalX()
     {
-         canvas.setForegroundColor(color);
-         // Dibuja el segmento hacia la derecha
-         if (movimiento == DERECHA) 
-         {
-               canvas.drawLine(xPosicion, yPosicion, xPosicion + LONGITUD_SEGMENTO, yPosicion);
-         }
-         // Dibuja el segmento hacia la izquierda
-         if (movimiento == IZQUIERDA) 
-         {
-               canvas.drawLine(xPosicion, yPosicion, xPosicion - LONGITUD_SEGMENTO, yPosicion);
-         }
-          // Dibuja el segmento hacia la arriba
-         if (movimiento == ARRIBA) 
-         {
-               canvas.drawLine(xPosicion, yPosicion, xPosicion + LONGITUD_SEGMENTO, yPosicion);
-         }
-          // Dibuja el segmento hacia la abajo
-         if (movimiento == ABAJO) 
-         {
-               canvas.drawLine(xPosicion, yPosicion, xPosicion, LONGITUD_SEGMENTO + yPosicion);
-         }
-    }
-    
-    /**
-     * Metodo que borra el segmento
-     */
-    public void erase(Canvas canvas) 
-    {
-        canvas.erase();
-    }       
-    
-  
-    /**
-     * Metodo que devuelve la posicion del eje y del segmento
-     */
-    public int getYPosicionInicial()
-    {
-        return yPosicion;
-    }
-    
-       /**
-     * Metodo que devuelve la posicion final en el eje Y del segmento     
-     */
-    public int getYPositionFinal()
-    {
-        int yFinal = yPosicion;
-        if(movimiento == ARRIBA)
-        {
-            yFinal -= LONGITUD_SEGMENTO;
+        int posicionFinalX = posicionX;
+        if (direccion == 0) {
+            posicionFinalX += LONGITUD_SEGMENTO;
+        } 
+        else if (direccion == 180) {
+            posicionFinalX -= LONGITUD_SEGMENTO;
         }
-        else if(movimiento == ABAJO)
-        {
-            yFinal += LONGITUD_SEGMENTO;
-        }
-        return yFinal;
+        return posicionFinalX;
     }
     
-      /**
-     * Metodo que devuelve la posicion del eje x del segmento
+    /*
+     * Devuelve la coordenada del eje Y donde acaba el segmento
      */
-    public int getXPosicionInicial()
+    public int getPosicionFinalY()
     {
-        return xPosicion;
-    }
-
-    /**
-     * Metodo que devuelve la posicion final en el eje X del segmento   
-     */
-    public int getXPositionFinal()
-    {
-        int xFinal = xPosicion;
-        if(movimiento == IZQUIERDA)
-        {
-            xFinal -= LONGITUD_SEGMENTO;
+        int posicionFinalY = posicionY;
+        if (direccion == 90) {
+            posicionFinalY += LONGITUD_SEGMENTO;
         }
-        else if(movimiento == DERECHA)
-        {
-            xFinal += LONGITUD_SEGMENTO;
+        else if (direccion == 270) {
+            posicionFinalY -= LONGITUD_SEGMENTO;
         }
-        return xFinal;
-    }
-
-       /**
-     * Metodo que devuelve hacia que lado se mueve el segmento    
-     */
-    public int getMovimiento()
-    {
-        return movimiento;
+        return posicionFinalY;
     }
     
-    /**
-     * Metodo que permite saber si el segmento colisiona
+    /*
+     * Dibuja el segmento en el lienzo
      */
-    public boolean colisionanCon(Segment segment)
+    public void dibujar(Canvas lienzo)
     {
-        boolean colision = false;
-        if (getYPosicionInicial() == getYPositionFinal()) 
-        {
-            colision = true;
-        } else if (getXPosicionInicial() == getXPositionFinal()) 
-        {
-            colision = true;
-        }
-        return colision ;
-    } 
+        lienzo.setForegroundColor(color);
+        lienzo.drawLine(posicionX, posicionY, getPosicionFinalX(), getPosicionFinalY());
+    }
     
-   
+    /*
+     * Borra el segmento del lienzo
+     */
+    public void borrar(Canvas lienzo)
+    {
+        lienzo.setForegroundColor(Color.WHITE);
+        lienzo.drawLine(posicionX, posicionY, getPosicionFinalX(), getPosicionFinalY());
+    }
+    
+    /*
+     * Devuelve la coordenada del eje X donde empieza el segmento
+     */
+    public int getPosicionInicialX()
+    {
+        return posicionX;
+    }
+    
+    /*
+     * Devuelve la coordenada del eje Y donde empieza el segmento
+     */
+    public int getPosicionInicialY()
+    {
+        return posicionY;
+    }    
+    
+    /*
+     * Devuelve la direccion que tiene el segmento
+     */
+    public int getDireccion()
+    {
+        return direccion;
+    }
+    
+    /*
+     * Devuelve true si el segmento colisiona con el segmento pasado como
+     * parametro; false en otro caso
+     */
+    public boolean colisiona(Segment segmento)
+    {
+        boolean colisiona = false;
+        if ((segmento.getPosicionFinalX() == posicionX) && 
+            (segmento.getPosicionFinalY() == posicionY)) {
+                colisiona = true;
+        }
+        return colisiona;
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
